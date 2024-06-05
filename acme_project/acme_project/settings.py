@@ -78,6 +78,8 @@ LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
+MEDIA_ROOT = BASE_DIR / 'media'
+
 USE_I18N = True
 
 USE_L10N = False
