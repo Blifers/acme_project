@@ -1,5 +1,6 @@
 # acme_project/urls.py
 # Импортируем настройки проекта.
+import debug_toolbar
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
@@ -7,6 +8,11 @@ from django.views.generic.edit import CreateView
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, reverse_lazy
+
+handler404 = 'core.views.page_not_found'
+
+
+admin.autodiscover()
 
 urlpatterns = [
     path('', include('pages.urls')),
@@ -22,4 +28,12 @@ urlpatterns = [
          name='registration',
          )
     # В конце добавляем к списку вызов функции static.
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Если проект запущен в режиме разработки...
+if settings.DEBUG:
+    # Добавить к списку urlpatterns список адресов из приложения debug_toolbar:
+    urlpatterns += (path('__debug__/', include(debug_toolbar.urls)),)
+
+# Подключаем функцию static() к urlpatterns:
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

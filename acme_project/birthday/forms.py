@@ -4,12 +4,19 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 
-from .models import Birthday
+from .models import Birthday, Congratulation
 
 # Множество с именами участников Ливерпульской четвёрки.
 BEATLES = {'Джон Леннон', 'Пол Маккартни', 'Джордж Харрисон', 'Ринго Старр'}
 
 # Для использования формы с моделями меняем класс на forms.ModelForm.
+
+
+class CongratulationForm(forms.ModelForm):
+
+    class Meta:
+        model = Congratulation
+        fields = ('text',)
 
 
 class BirthdayForm(forms.ModelForm):
